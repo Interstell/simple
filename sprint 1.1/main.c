@@ -18,17 +18,17 @@ int main()
     char* str;
     int emotion;
     printf("What do you feel right now?\n");
-    printf("Happiness, Sadness, Angry, Disgust or Fear?\n");
+    printf("Happiness, Sadness, Anger, Disgust or Fear?\n");
     str = gets(c);
-    if (strcpy(str, "Happiness") == 0)
+    if (strcmp(str, "Happiness") == 0)
     emotion = HAPPY;
-    if (strcpy(str, "Sadness") == 0)
+    if (strcmp(str, "Sadness") == 0)
     emotion = SAD;
-    if (strcpy(str, "Angry") == 0)
+    if (strcmp(str, "Anger") == 0)
     emotion = ANGRY;
-    if (strcpy(str, "Disgust") == 0)
+    if (strcmp(str, "Disgust") == 0)
     emotion = DISGUST;
-    if (strcpy(str, "Fear") == 0)
+    if (strcmp(str, "Fear") == 0)
     emotion = FEAR;
     emoColor(emotion);
 
@@ -42,16 +42,19 @@ void emoColor(int emotion){
     int i, j;
     pos.X = 0;
     pos.Y = 0;
+    colorDefine(hConsole, emotion);
     for (i = 0; i < 25; i++){
         for (j = 0; j < 80; j++){
-            colorDefine(hConsole, emotion);
+            pos.X = j;
+            pos.Y = i;
+            SetConsoleCursorPosition(hConsole, pos);
             printf(" ");
         }
     }
 }
 
 void colorDefine(HANDLE hConsole, int emotion){
-    int fmt;
+    int fmt = 0;
     switch(emotion){
     case HAPPY:
         fmt = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
@@ -67,6 +70,9 @@ void colorDefine(HANDLE hConsole, int emotion){
         break;
     case FEAR:
         fmt = BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+        break;
+    default:
+        printf("error");
     }
     SetConsoleTextAttribute(hConsole, fmt);
 }
