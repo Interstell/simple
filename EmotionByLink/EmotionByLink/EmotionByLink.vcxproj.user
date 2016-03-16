@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>http://bm.img.com.ua/berlin/storage/orig/8/9c/dd61c5c3ef356ee477258a05360369c8.jpg</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>http://pp.vask.me/c628720/v628720762/29ec4/5x6m-CkYw3g.jpg</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
