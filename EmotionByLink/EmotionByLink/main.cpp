@@ -9,10 +9,10 @@
 //INPUT FORMAT: COMMAND LINE ARGUMENTS
 ////For local files
 //////EmotionFromJpg.exe %path_to_file% local 
-//////example: EmotionFromJpg.exe C:\img.jpg local
+//////example: EmotionByLink.exe C:\img.jpg local
 ////For URLs
 //////EmotionFromJpg.exe %url% url
-//////example: EmotionFromJpg.exe http://vk.cc/4VbJDo url
+//////example: EmotionByLink.exe http://vk.cc/4VbJDo url
 
 //RESULTS ARE SAVED TO emotions.txt
 
@@ -38,7 +38,10 @@ int main(int argc, char *argv[]){
 	}
 	//requesting data from Emotion API using curl, saving JSON response to html
 	char cmd[400];
-	char exportFileName[] = "emotions.json";
+	char exportFileName[200];
+	sprintf(exportFileName, "%s\\emotions.json", path);
+	char resultFileName[200];
+	sprintf(resultFileName, "%s\\emotions.txt", path);
 	if (strcmp(argv[2], "url") == 0){
 		sprintf(cmd, "%s\\curl.exe -o %s -XPOST https://api.projectoxford.ai/emotion/v1.0/recognize?subscription-key=349f1c7ff1e642498d333cb2fe5fab25 -k -d \"{'url':'%s'}\" -H \"Content-Type:application/json\"", path, exportFileName, link);
 	}
@@ -48,8 +51,8 @@ int main(int argc, char *argv[]){
 	else exit(EXIT_FAILURE);
 	system(cmd);// WARNING! NO UPDATE IF COMMENTED
 	//parsing and structurizing JSON response, writing to stream
-	FILE* fJSON = fopen("emotions.json", "r");
-	FILE* output = fopen("emotions.txt", "w");
+	FILE* fJSON = fopen(exportFileName, "r");
+	FILE* output = fopen(resultFileName, "w");
 	json_error_t error;
 	json_t* root = json_loadf(fJSON, 0, &error);
 	json_t* wrongURL = json_object_get(root, "error");
