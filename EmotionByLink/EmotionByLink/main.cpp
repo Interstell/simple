@@ -4,6 +4,18 @@
 #include <string.h>
 #include <jansson\jansson.h>
 
+//TO RUN THE APP curl.exe has to be in the same folder with EmotionFromJpg.exe.exe
+
+//INPUT FORMAT: COMMAND LINE ARGUMENTS
+////For local files
+//////EmotionFromJpg.exe %path_to_file% local 
+//////example: EmotionFromJpg.exe C:\img.jpg local
+////For URLs
+//////EmotionFromJpg.exe %url% url
+//////example: EmotionFromJpg.exe http://vk.cc/4VbJDo url
+
+//RESULTS ARE SAVED TO emotions.txt
+
 //# - no face detected
 //@ - failed to upload image (wrong link)
 
@@ -27,8 +39,14 @@ int main(int argc, char *argv[]){
 	//requesting data from Emotion API using curl, saving JSON response to html
 	char cmd[400];
 	char exportFileName[] = "emotions.json";
-	sprintf(cmd, "%s\\curl.exe -o %s -XPOST https://api.projectoxford.ai/emotion/v1.0/recognize?subscription-key=349f1c7ff1e642498d333cb2fe5fab25 -k -d \"{'url':'%s'}\" -H \"Content-Type:application/json\"", path, exportFileName, link);
-	//system(cmd);// WARNING! NO UPDATE IF COMMENTED
+	if (strcmp(argv[2], "url") == 0){
+		sprintf(cmd, "%s\\curl.exe -o %s -XPOST https://api.projectoxford.ai/emotion/v1.0/recognize?subscription-key=349f1c7ff1e642498d333cb2fe5fab25 -k -d \"{'url':'%s'}\" -H \"Content-Type:application/json\"", path, exportFileName, link);
+	}
+	else if (strcmp(argv[2], "local") == 0){
+		sprintf(cmd, "%s\\curl.exe -o %s -XPOST https://api.projectoxford.ai/emotion/v1.0/recognize?subscription-key=349f1c7ff1e642498d333cb2fe5fab25 -k --data-binary @%s -H \"Content-Type:application/octet-stream\"", path, exportFileName, link);
+	}
+	else exit(EXIT_FAILURE);
+	system(cmd);// WARNING! NO UPDATE IF COMMENTED
 	//parsing and structurizing JSON response, writing to stream
 	FILE* fJSON = fopen("emotions.json", "r");
 	FILE* output = fopen("emotions.txt", "w");
@@ -41,7 +59,6 @@ int main(int argc, char *argv[]){
 	else if (json_array_size(root) == 0) fprintf(output, "%s", "#"); //no face detected
 	for (int i = 0; i < json_array_size(root); i++){
 		json_t* data = json_array_get(root, i);
-		json_t* error = json_object_get(data, "error");
 		json_t* scores = json_object_get(data, "scores");
 		json_t* anger = json_object_get(scores, "anger");
 		json_t* contempt = json_object_get(scores, "contempt");
