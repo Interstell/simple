@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1458112801 source:c:\files\institute\1 курс\2 семестр\ПППІ\project\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1458115275 source:c:\files\institute\1 курс\2 семестр\ПППІ\project\color.c
+	<stdio.h>
+	"color.h"
+	<windows.h>
+
+1458115351 c:\files\institute\1 курс\2 семестр\ПППІ\project\color.h
+
