@@ -38,16 +38,16 @@ int colorDefine(int emotion){
     int fmt = 0;
     switch(emotion){
     case ANGER:
-        fmt = BACKGROUND_RED | BACKGROUND_INTENSITY;
+        fmt = BACKGROUND_RED;
         break;
     case CONTEMPT:
-        fmt = BACKGROUND_RED;
+        fmt = BACKGROUND_RED | BACKGROUND_INTENSITY;
         break;
     case DISGUST:
         fmt = BACKGROUND_GREEN | BACKGROUND_INTENSITY;
         break;
     case FEAR:
-        fmt = BACKGROUND_RED | BACKGROUND_BLUE;
+        fmt = BACKGROUND_RED | BACKGROUND_BLUE |  BACKGROUND_INTENSITY;
         break;
     case HAPPINESS:
         fmt = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
@@ -56,7 +56,7 @@ int colorDefine(int emotion){
         fmt = BACKGROUND_RED | BACKGROUND_GREEN;
         break;
     case SADNESS:
-        fmt = BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+        fmt = BACKGROUND_BLUE;
         break;
     case SURPRISE:
         fmt = BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
