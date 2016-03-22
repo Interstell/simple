@@ -10,3 +10,24 @@
 
 1458115351 c:\files\institute\1 курс\2 семестр\ПППІ\project\color.h
 
+1458552721 source:c:\files\institute\2semester\pppi\sprint 1.2\color.c
+	<stdio.h>
+	"color.h"
+	<windows.h>
+
+1458115351 c:\files\institute\2semester\pppi\sprint 1.2\color.h
+
+1458552915 source:c:\files\institute\2semester\pppi\sprint 1.2\main.c
+	<stdio.h>
+	<stdlib.h>
+	"color.h"
+	<windows.h>
+
+1458673662 source:c:\users\nadine\documents\github\simple\project\main.c
+	<stdio.h>
+	<stdlib.h>
+	"color.h"
+	<windows.h>
+
+1458673662 c:\users\nadine\documents\github\simple\project\color.h
+
