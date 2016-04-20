@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "cjson.h"
 #include <QBitmap>
+#include <QRegion>
 #include <Windows.h>
 
 
@@ -66,7 +67,8 @@ void MainWindow::on_startBtn_clicked()
         // Draw the results into mat retrieved from webcam
         if (found.size() > 0) {
             for (int i = 0; i < found.size(); i++) {
-                 rectangle(MainWindow::img, found[i].br(), found[i].tl(), Scalar(0, 0, (i == largestFace) ? 255 : 0), 2, 4, 0);
+                 //rectangle(MainWindow::img, found[i].br(), found[i].tl(), Scalar(0, 0, (i == largestFace) ? 255 : 0), 2, 4, 0);
+                rectangle(MainWindow::img, found[i].br(), found[i].tl(), (i == largestFace)?Scalar(0,255,0):Scalar(255,255,255), 2, 4, 0);
             }
         }
 
@@ -100,9 +102,9 @@ double* MainWindow::emotions_Analyze(char* link){
     char exportFileName[400];
     sprintf(exportFileName, "emotions.json");
     sprintf(cmd, "curl.exe -o %s -XPOST https://api.projectoxford.ai/emotion/v1.0/recognize?subscription-key=349f1c7ff1e642498d333cb2fe5fab25 -k --data-binary @%s -H \"Content-Type:application/octet-stream\"", exportFileName, link);
-    system(cmd);// WARNING! NO UPDATE IF COMMENTED
-    //WinExec(cmd,SW_HIDE);
-    system("cls");
+    //system(cmd);// WARNING! NO UPDATE IF COMMENTED
+    WinExec(cmd,SW_HIDE);
+    //system("cls");
 
     FILE* fJSON = fopen(exportFileName, "r");
 
@@ -171,9 +173,50 @@ void MainWindow::on_emotionBtn_clicked()
     ui->emoLabel->setMask(mask);
 
     ui->emoLabel->setStyleSheet("QLabel {width: 200px; height: 100px;  background: red; -moz-border-radius: 100px / 50px; -webkit-border-radius: 100px / 50px; border-radius: 100px / 50px;}");*/
+
     //QRegion maskedRegion(ui->emoLabel->geometry().x(),ui->emoLabel->geometry().y(),ui->emoLabel->geometry().width(),ui->emoLabel->geometry().height(),QRegion::Ellipse);
     //ui->emoLabel->setMask(maskedRegion);
-    //ui->emoLabel->setStyleSheet("QLabel { background-color : red; color : blue; }");
+
+    int maxEmoIndex = 0;
+
+    for (int i = 1; i<8; i++){
+        if (emotions[i]>emotions[maxEmoIndex]){
+            if (i == 5 && emotions[i] > 0.93) //correction for neutral
+                maxEmoIndex = i;
+        }
+    }
+
+    char bgColor[10];
+    switch (maxEmoIndex){
+    case 0: //anger
+        strcpy(bgColor,"#FF0000"); //red
+        break;
+    case 1: //contempt
+        strcpy(bgColor,"#800020"); //burgundy
+        break;
+    case 2: //disgust
+        strcpy(bgColor,"#00FF00"); //green
+        break;
+    case 3: //fear
+        strcpy(bgColor,"#9F00C5"); //purple
+        break;
+    case 4: //happiness
+        strcpy(bgColor,"#FFFF00"); //yellow
+        break;
+    case 5: //neutral
+        strcpy(bgColor,"#FF7F00"); //orange
+        break;
+    case 6: //sadness
+        strcpy(bgColor,"#0000FF"); //blue
+        break;
+    case 7: //surprise
+        strcpy(bgColor,"#FFC0CB"); //pink
+        break;
+
+    }
+    char cssForLabel[100];
+    sprintf(cssForLabel,"QLabel {border-radius: %dpx; background-color : %s;}", min(ui->emoLabel->geometry().width(),ui->emoLabel->geometry().height())/2, bgColor);
+    ui->emoLabel->setStyleSheet(cssForLabel);
 
     delete[] emotions;
 }
