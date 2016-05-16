@@ -56,6 +56,12 @@ private slots:
 
     void on_slFade_sliderReleased();
 
+    void on_vol_sliderMoved(int position);
+
+    void on_play_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
