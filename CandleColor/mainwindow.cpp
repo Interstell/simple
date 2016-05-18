@@ -205,9 +205,9 @@ void MainWindow::on_play_clicked(int emotion)
 {
 
 
-    QString str1;
-    str1.toStdString();
-    str1.fromStdString(str1.toStdString());
+    std :: String str1;
+    //str1.toStdString();
+
     int i = rand() % 3 + 1;
     switch (emotion) {
         case ANGER:
@@ -315,8 +315,9 @@ void MainWindow::on_play_clicked(int emotion)
                 }
                 break;
     }
-
-    player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators("C:\Files\Music\avener_kadebostany_-_castle_in_the_snow.mp3")));
+    QString str2;
+    str2.fromStdString(str1);
+    player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators(str2)));
     player->setVolume(ui->vol->value());
     player->play();
 }
