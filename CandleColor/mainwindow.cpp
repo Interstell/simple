@@ -206,7 +206,7 @@ void MainWindow::on_play_clicked(int emotion)
 
 
     std :: String str1;
-    //str1.toStdString();
+
 
     int i = rand() % 3 + 1;
     switch (emotion) {
@@ -320,6 +320,9 @@ void MainWindow::on_play_clicked(int emotion)
     player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators(str2)));
     player->setVolume(ui->vol->value());
     player->play();
+    qint64 playPosition = rand () % 15 + 20;
+    playPosition *= 1000;
+    player->setPosition(playPosition);
 }
 
 void MainWindow::on_pushButton_2_clicked()
