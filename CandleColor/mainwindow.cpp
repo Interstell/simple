@@ -2,10 +2,14 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 #include <windows.h>
+#include <QMediaPlayer>
+#include <QDir>
+#include <QUrl>
+
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 
 const char* IPPORT = "192.168.56.101:5000";
-
+QMediaPlayer *player = new QMediaPlayer;
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -188,4 +192,137 @@ void MainWindow::on_slBlink_sliderReleased()
 void MainWindow::on_slFade_sliderReleased()
 {
     sendEffect(FADE);
+}
+
+
+
+void MainWindow::on_vol_sliderMoved(int position)
+{
+    player->setVolume(position);
+}
+
+void MainWindow::on_play_clicked(int emotion)
+{
+
+
+    std :: String str1;
+    //str1.toStdString();
+
+    int i = rand() % 3 + 1;
+    switch (emotion) {
+        case ANGER:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/angry/disturbed_-_down_with_the_sickness.mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/angry/rammstein_-_mein_herz_brennt.mp3";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/angry/three_days_grace_-_animal_i_have_become.mp3";
+                    break;
+                }
+                break;
+        case CONTEMPT:
+                switch (i) {
+                case 1:
+                    str = "";
+                    break;
+                case 2:
+                    str = "";
+                    break;
+                case 3:
+                    str = "";
+                    break;
+                }
+                break;
+        case DISGUST:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/disgust/ennio_morricone_-_inferno_bianco_synth.mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/disgust/";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/disgust/";
+                    break;
+                }
+                break;
+        case FEAR:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/disgust/ennio_morricone_-_inferno_bianco_synth.mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/disgust/";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/disgust/";
+                    break;
+                }
+                break;
+        case HAPPINESS:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/happy/mika_-_lollipop.mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/happy/pitbull_-_suavemente.mp3";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/happy/smash_mouth_-_ all_star.mp3";
+                    break;
+                }
+                break;
+        case NEUTRAL:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/neutral/lewis_del_mar_-_loud(y).mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/neutral/the_police_-_every_breath_you_take.mp3";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/neutral/welshly_arms_-_hold_on_i'm_comin.mp3";
+                    break;
+                }
+                break;
+        case SADNESS:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/sad/frank_sinatra_-_killing_me_softly_with_her_song.mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/sad/sia_-_i_m_in_here.mp3";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/sad/sting_-_shape_of_my_heart.mp3";
+                    break;
+                }
+                break;
+        case SURPRISE:
+                switch (i) {
+                case 1:
+                    str = "C:/Files/musicForProject/surprise/aerosmith_-_the_other_side.mp3";
+                    break;
+                case 2:
+                    str = "C:/Files/musicForProject/surprise/rhcp_-_knock_me_down.mp3";
+                    break;
+                case 3:
+                    str = "C:/Files/musicForProject/surprise/the_animals_-_boom_boom.mp3";
+                    break;
+                }
+                break;
+    }
+    QString str2;
+    str2.fromStdString(str1);
+    player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators(str2)));
+    player->setVolume(ui->vol->value());
+    player->play();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    player->pause();
 }
