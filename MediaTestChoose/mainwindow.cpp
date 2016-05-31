@@ -4,9 +4,9 @@
 #include <QUrl>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "info.h"
 
 QMediaPlayer *player = new QMediaPlayer;
-int i=0;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,9 +24,11 @@ void MainWindow::on_Start_clicked()
 {
     QString str1=QFileDialog::getOpenFileName(this, tr("Open File"),"/home",
                                                     tr("Music (*.mp3)"));
-    //QString str1=ui->lineEdit->text();
     player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators(str1)));
     player->setVolume(ui->spinBox->value());
+    int val=20000+10000*qrand()%3;
+    qint64 pos=(qint64)val;
+    player->setPosition(pos);
     player->play();
 }
 void MainWindow::on_Stop_clicked()
@@ -40,7 +42,13 @@ void MainWindow::on_Play_clicked()
     player->play();
 }
 
-void MainWindow::on_spinBox_valueChanged(int arg1)
+void MainWindow::on_spinBox_valueChanged()
 {
     player->setVolume(ui->spinBox->value());
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    Info * w= new Info();
+    w->show();
 }
