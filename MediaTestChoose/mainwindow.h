@@ -22,7 +22,9 @@ private slots:
 
     void on_Play_clicked();
 
-    void on_spinBox_valueChanged(int arg1);
+    void on_spinBox_valueChanged();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
